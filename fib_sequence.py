@@ -6,11 +6,9 @@ exponentiation. Makes use of the identity
 """
 
 def mat_mul(A,B):
-	#|a,b|   |d,e|
-	#|b,c| * |e,f|
-	a,b,c = A
-	d,e,f = B
-	return a*d + b*e, a*e + b*f, b*e + c*f
+	#|A[0], A[1]|   |B[0], B[1]|
+	#|A[1] ,A[2]| * |B[1], B[2]|
+	return [A[0]*B[0] + A[1]*B[1], A[0]*B[1] + A[1]*B[2], A[1]*B[1] + A[2]*B[2]]
 
 def mat_pow(A,n):
 	if n == 0:
@@ -25,11 +23,13 @@ def mat_pow(A,n):
 		return mat_mul(A, mat_pow(mat_mul(A,A), (n-1)//2))
 
 def fib(n):
-	if n <1:
-		return 0
+	if n < 0:
+		return []
+	if n == 0:
+		return [0]
 	if n == 1:
-		return 1, 0
-	return mat_pow((1,1,0), n-1)
-
-print fib(8) 		
-
+		return [1, 0]
+	return mat_pow([1,1,0], n-1)+fib(n-3)
+	
+		
+print fib(8)
